@@ -1,0 +1,7 @@
+openai
+langchain
+retry
+streamlit
+streamlit-audiorecorder
+git+https://github.com/stlukey/whispercpp.py
+gTTS
