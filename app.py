@@ -98,7 +98,7 @@ example3 = "Tell me an haiku about yourself"
 # Streamlit
 with st.sidebar:
     audio = audiorecorder("Click to send voice message", "Recording... Click when you're done", key="recorder")
-    st.title("Speech-to-Speech Bot")
+    st.title("TalkativeAI")
     st.write("Examples:")
     Example1 = st.button(example1)
     Example2 = st.button(example2)
