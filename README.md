@@ -2,7 +2,7 @@
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://talkativeai.streamlit.app/)
 
-ChatBot able to receive either a voice message or a text message as a prompt and reply with a text message and a voice message.
+TalkativeAI is a ChatBot able to receive either a voice message or a text message as a prompt and reply with a text message and a voice message. It uses whisper.cpp for Speech-to-Text and gTTS for Text-to-Speech.
 
 Follow me [@alonsosilva](https://twitter.com/alonsosilva)
 
