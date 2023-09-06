@@ -115,7 +115,7 @@ with st.sidebar:
     lang = to_language_code_dict[language.lower()]
     precision = st.selectbox("Precision", ["whisper-tiny", "whisper-base", "whisper-small"])
     w = load_model(precision)
-    voice = st.toggle("Voice")
+    voice = st.toggle("Voice", value=True)
     st.write("Examples:")
     Example1 = st.button(example1)
     Example2 = st.button(example2)
