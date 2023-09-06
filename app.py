@@ -6,6 +6,7 @@ from audiorecorder import audiorecorder
 import whisper
 from whispercpp import Whisper
 from gtts import gTTS
+import emoji
 
 #from dotenv import load_dotenv, find_dotenv
 #load_dotenv(find_dotenv())
@@ -154,10 +155,11 @@ if (prompt := st.chat_input("Your message")) or Example1 or Example2 or Example3
     with st.chat_message("assistant"):
         st.markdown(response)
         if voice:
+            clean_response = emoji.replace_emoji(response, replace='')
             if lang=='es':
-                tts = gTTS(response, lang='es', tld='cl')
+                tts = gTTS(clean_response, lang='es', tld='cl')
             else:
-                tts = gTTS(response, lang=lang)
+                tts = gTTS(clean_response, lang=lang)
             with NamedTemporaryFile(suffix=".mp3") as temp:
                 tempname = temp.name
                 tts.save(tempname)
