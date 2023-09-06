@@ -114,6 +114,7 @@ with st.sidebar:
     lang = to_language_code_dict[language.lower()]
     precision = st.selectbox("Precision", ["whisper-tiny", "whisper-base", "whisper-small"])
     w = load_model(precision)
+    voice = st.toggle("Voice")
     st.write("Examples:")
     Example1 = st.button(example1)
     Example2 = st.button(example2)
@@ -152,11 +153,15 @@ if (prompt := st.chat_input("Your message")) or Example1 or Example2 or Example3
     # Display assistant response in chat message container
     with st.chat_message("assistant"):
         st.markdown(response)
-        tts = gTTS(response, lang='en')
-        with NamedTemporaryFile(suffix=".mp3") as temp:
-            tempname = temp.name
-            tts.save(tempname)
-            autoplay_audio(tempname)
+        if voice:
+            if lang=='es':
+                tts = gTTS(response, lang='es', tld='cl')
+            else:
+                tts = gTTS(response, lang=lang)
+            with NamedTemporaryFile(suffix=".mp3") as temp:
+                tempname = temp.name
+                tts.save(tempname)
+                autoplay_audio(tempname)
 
     # Add assistant response to chat history
     st.session_state.messages.append({"role": "assistant", "content": response})
