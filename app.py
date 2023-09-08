@@ -24,7 +24,6 @@ language_list = sorted(language_list)
 language_list = [language.capitalize() for language in language_list if language != "automatic"]
 language_list = ["Automatic"] + language_list
 
-
 @st.cache_resource  # 👈 Add the caching decorator
 def load_model(precision):
     if precision == "whisper-tiny":
@@ -34,7 +33,6 @@ def load_model(precision):
     else:
         model = Whisper('small')
     return model
-
 
 from langchain.chat_models import ChatOpenAI
 
@@ -52,26 +50,14 @@ from langchain.prompts import (
 
 prompt_1 = ChatPromptTemplate.from_messages([
     SystemMessagePromptTemplate.from_template(
-        "You are a helpful AI assistant. Keep your answers short and to the point."
+        "You are a helpful AI assistant. Your name is TARS. Keep your answers short and to the point. It is very important that you reply to a questions in the language it was formulated."
     ),
     MessagesPlaceholder(variable_name="history"),
-    HumanMessagePromptTemplate.from_template("Reply to the following question in the language it was formulated: {input}")
+    HumanMessagePromptTemplate.from_template("Reply to the following question in the language it was formulated: {input}. Just reply don't specify what you're doing.")
 ])
 
 memory = ConversationBufferMemory(return_messages=True)
 conversation = ConversationChain(memory=memory, prompt=prompt_1, llm=llm)
-
-def my_response(llm, text: str) -> str:
-    aux = llm.predict(input=text)
-    counter = 0
-    while ("I'm not able to help" in aux) and counter<2:
-        counter += 1
-        aux = llm.predict(input=text)
-    return aux
-
-
-# Download whisper.cpp
-#w = Whisper('tiny')
 
 def inference(audio):
     # Save audio to a file:
@@ -95,7 +81,6 @@ def autoplay_audio(file_path: str):
             md,
             unsafe_allow_html=True,
         )
-
 
 
 example1 = "Tell me a haiku about AI"
@@ -132,7 +117,7 @@ if (prompt := st.chat_input("Your message")) or Example1 or len(audio):
     st.chat_message("user").markdown(prompt)
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
-    response = my_response(conversation, prompt)
+    response = conversation.predict(input=prompt)
     # Display assistant response in chat message container
     with st.chat_message("assistant"):
         st.markdown(response)
