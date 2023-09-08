@@ -97,15 +97,8 @@ def autoplay_audio(file_path: str):
         )
 
 
-html1="""
-<a href='https://ko-fi.com/S6S3C06PD' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
-<br />
-<a href="https://twitter.com/alonsosilva?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @alonsosilva</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-"""
 
-example1 = "Tell me a joke about love"
-example2 = "Tell me an haiku about life"
-example3 = "Tell me an haiku about yourself"
+example1 = "Tell me a haiku about AI"
 
 # Streamlit
 with st.sidebar:
@@ -116,14 +109,8 @@ with st.sidebar:
     precision = st.selectbox("Precision", ["whisper-tiny", "whisper-base", "whisper-small"])
     w = load_model(precision)
     voice = st.toggle("Voice", value=True)
-    st.write("Examples:")
+    st.write("Example:")
     Example1 = st.button(example1)
-    Example2 = st.button(example2)
-    Example3 = st.button(example3)
-
-with st.sidebar:
-    components.html(html1)
-
 # Initialize chat history
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -134,13 +121,9 @@ for message in st.session_state.messages:
         st.markdown(message["content"])
 
 # React to user input
-if (prompt := st.chat_input("Your message")) or Example1 or Example2 or Example3 or len(audio):
+if (prompt := st.chat_input("Your message")) or Example1 or len(audio):
     if Example1:
         prompt = example1
-    if Example2:
-        prompt = example2
-    if Example3:
-        prompt = example3
     # If it's coming from the audio recorder transcribe the message with whisper.cpp
     if len(audio)>0:
         prompt = inference(audio)
@@ -150,7 +133,6 @@ if (prompt := st.chat_input("Your message")) or Example1 or Example2 or Example3
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
     response = my_response(conversation, prompt)
-    # response = f"Echo: {prompt}"
     # Display assistant response in chat message container
     with st.chat_message("assistant"):
         st.markdown(response)
