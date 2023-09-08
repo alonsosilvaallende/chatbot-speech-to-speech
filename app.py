@@ -8,8 +8,8 @@ from whispercpp import Whisper
 from gtts import gTTS
 import emoji
 
-from dotenv import load_dotenv, find_dotenv
-load_dotenv(find_dotenv())
+#from dotenv import load_dotenv, find_dotenv
+#load_dotenv(find_dotenv())
 
 import os
 import openai
