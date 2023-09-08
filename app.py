@@ -8,8 +8,8 @@ from whispercpp import Whisper
 from gtts import gTTS
 import emoji
 
-#from dotenv import load_dotenv, find_dotenv
-#load_dotenv(find_dotenv())
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv())
 
 import os
 import openai
@@ -86,6 +86,9 @@ def autoplay_audio(file_path: str):
 example1 = "Tell me a haiku about AI"
 
 # Streamlit
+st.set_page_config(page_title="TalkativeAI", layout="wide", initial_sidebar_state=st.session_state.get("sidebar_state", "expanded"))
+st.session_state.sidebar_state = "expanded"
+
 with st.sidebar:
     audio = audiorecorder("Click to send voice message", "Recording... Click when you're done", key="recorder")
     st.title("TalkativeAI")
