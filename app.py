@@ -56,8 +56,13 @@ prompt_1 = ChatPromptTemplate.from_messages([
     HumanMessagePromptTemplate.from_template("Reply to the following question in the language it was formulated: {input}. Just reply don't specify what you're doing.")
 ])
 
-memory = ConversationBufferMemory(return_messages=True)
-conversation = ConversationChain(memory=memory, prompt=prompt_1, llm=llm)
+@st.cache_resource
+def aux():
+    memory = ConversationBufferMemory(return_messages=True)
+    conversation = ConversationChain(memory=memory, prompt=prompt_1, llm=llm)
+    return memory, conversation
+
+memory, conversation = aux()
 
 def inference(audio):
     # Save audio to a file:
