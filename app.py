@@ -101,7 +101,7 @@ example1 = "Tell me a haiku about AI"
 with st.sidebar:
     audio = audiorecorder("Click to send voice message", "Recording... Click when you're done", key="recorder")
     st.title("TalkativeAI")
-    language = st.selectbox('Language', language_list, index=23)
+    language = st.selectbox('Language', language_list, index=24)
     lang = to_language_code_dict[language.lower()]
     precision = st.selectbox("Precision", ["whisper-tiny", "whisper-base", "whisper-small"])
     w = load_model(precision)
